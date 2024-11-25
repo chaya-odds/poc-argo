@@ -1,24 +1,4 @@
 applications:
-  argo-apps:
-    destination:
-      name: ops
-      namespace: argo-cd
-    finalizers:
-    - resources-finalizer.argocd.argoproj.io
-    info: null
-    project: ops
-    source:
-      directory:
-        recurse: true
-      path: apps
-      repoURL: https://github.com/oddsteam/odds-cloud-apps.git
-      targetRevision: main
-    syncPolicy:
-      automated:
-        prune: true
-        selfHeal: true
-      syncOptions:
-      - CreateNamespace=true
   argo-apps-ops:
     destination:
       name: ops
@@ -28,7 +8,7 @@ applications:
     project: argo-cd
     sources:
     - ref: values
-      repoURL: https://github.com/oddsteam/odds-cloud-deployment.git
+      repoURL: https://github.com/chaya-odds/poc-argo.git
       targetRevision: main
     - chart: argocd-apps
       helm:
@@ -43,32 +23,7 @@ applications:
         selfHeal: true
       syncOptions:
       - CreateNamespace=true
-  argo-cd-image-updater:
-    destination:
-      name: ops
-      namespace: argo-cd
-    finalizers:
-    - resources-finalizer.argocd.argoproj.io
-    project: argo-cd
-    sources:
-    - ref: values
-      repoURL: https://github.com/oddsteam/odds-cloud-deployment.git
-      targetRevision: main
-    - chart: argocd-image-updater
-      helm:
-        releaseName: argo-cd-image-updater
-        valueFiles:
-        - $values/ops/argo-cd-image-updater/values.yaml
-      repoURL: https://argoproj.github.io/argo-helm
-      targetRevision: 0.10.1
-    syncPolicy:
-      automated:
-        prune: true
-        selfHeal: true
-      syncOptions:
-      - CreateNamespace=true
- 
-  ingress-nginx-ops:
+
     destination:
       name: ops
       namespace: ingress-nginx
@@ -99,7 +54,7 @@ applications:
         selfHeal: true
       syncOptions:
       - CreateNamespace=true
-  projects:
+projects:
   argo-cd:
     clusterResourceWhitelist:
     - group: "*"
@@ -115,82 +70,6 @@ applications:
     roles: []
     sourceRepos:
     - "*"
-  ceph-csi-cephfs-non-prod:
-    clusterResourceWhitelist:
-    - group: "*"
-      kind: "*"
-    destinations:
-    - name: non-prod
-      namespace: ceph-csi-cephfs
-    finalizers:
-    - resources-finalizer.argocd.argoproj.io
-    namespaceResourceWhitelist:
-    - group: "*"
-      kind: "*"
-    roles: []
-    sourceRepos:
-    - "*"
-  ceph-csi-cephfs-ops:
-    clusterResourceWhitelist:
-    - group: "*"
-      kind: "*"
-    destinations:
-    - name: ops
-      namespace: ceph-csi-cephfs
-    finalizers:
-    - resources-finalizer.argocd.argoproj.io
-    namespaceResourceWhitelist:
-    - group: "*"
-      kind: "*"
-    roles: []
-    sourceRepos:
-    - "*"
-  guestbook:
-    description: Example Project
-    destinations:
-    - name: ops
-      namespace: guestbook
-    finalizers:
-    - resources-finalizer.argocd.argoproj.io
-    namespaceResourceWhitelist:
-    - group: "*"
-      kind: "*"
-    roles: []
-    sourceRepos:
-    - "*"
-  ingress-nginx-ops:
-    clusterResourceWhitelist:
-    - group: "*"
-      kind: "*"
-    destinations:
-    - name: ops
-      namespace: ingress-nginx
-    finalizers:
-    - resources-finalizer.argocd.argoproj.io
-    namespaceResourceWhitelist:
-    - group: "*"
-      kind: "*"
-    roles: []
-    sourceRepos:
-    - "*"
-  monitoring:
-    clusterResourceWhitelist:
-    - group: "*"
-      kind: "*"
-    destinations:
-    - name: ops
-      namespace: kube-system
-    - name: ops
-      namespace: monitoring
-    finalizers:
-    - resources-finalizer.argocd.argoproj.io
-    namespaceResourceWhitelist:
-    - group: "*"
-      kind: "*"
-    roles: []
-    sourceRepos:
-    - "*"
-  non-prod:
     clusterResourceWhitelist:
     - group: "*"
       kind: "*"
