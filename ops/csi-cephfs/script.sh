@@ -1,1 +1,0 @@
-ceph auth get-or-create client.ops mon 'profile rbd' osd 'profile rbd pool=kubernetes' mgr 'profile rbd pool=kubernetes'

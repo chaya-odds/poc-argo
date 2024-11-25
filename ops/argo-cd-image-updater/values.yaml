@@ -1,7 +1,0 @@
-config:
-  registries:
-  - name: GitLab Container Registry
-    api_url: https://registry.odd.works
-    prefix: registry.odd.works
-    ping: yes
-    credentials: pullsecret:argo-cd/registry-gitlab-odd-works

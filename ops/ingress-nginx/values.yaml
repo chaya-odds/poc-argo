@@ -1,8 +1,0 @@
-controller:
-  service:
-    type: NodePort
-    nodePorts:
-      https: 30285
-  admissionWebhooks:
-    annotations:
-      argocd.argoproj.io/hook: PostSync

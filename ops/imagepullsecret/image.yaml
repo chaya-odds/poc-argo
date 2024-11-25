@@ -1,7 +1,0 @@
-apiVersion: v1
-data:
-  .dockerconfigjson: eyJhdXRocyI6eyJnaGNyLmlvIjp7InVzZXJuYW1lIjoiamF0ZGlsb2stb2RkcyIsInBhc3N3b3JkIjoiZ2hwX2IyWHlEaHR1dWlycVF3U0pGd1piZUVCRWM2SVA3dTFpdTlVcCIsImVtYWlsIjoiaW5mcmFAb2Rkcy50ZWFtIiwiYXV0aCI6ImFtRjBaR2xzYjJzdGIyUmtjenBuYUhCZllqSlllVVJvZEhWMWFYSnhVWGRUU2taM1dtSmxSVUpGWXpaSlVEZDFNV2wxT1ZWdyJ9fX0=
-kind: Secret
-metadata:
-  name: ghcr-registry
-type: kubernetes.io/dockerconfigjson
