@@ -1,0 +1,17 @@
+ingress:
+  enabled: true
+  path: /
+  pathType: ImplementationSpecific
+  hostname: queue-dev.odds.team
+  ingressClassName: nginx
+service:
+  type: NodePort
+  nodePorts:
+    amqp: "31672"
+    amqpTls: "31671"
+    dist: "31772"
+    manager: "31872"
+    epmd: "31369"
+    metrics: "31419"
+persistence:
+  existingClaim: "data-rabbitmq-0"

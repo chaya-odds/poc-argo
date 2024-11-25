@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: example-pod
+spec:
+  containers:
+  - image: docker.io/library/nginx:latest
+    name: example-web-server
+    volumeMounts:
+    - mountPath: /var/lib/www
+      name: example-mount
+  volumes:
+  - name: example-mount
+    persistentVolumeClaim:
+      claimName: example-pvc

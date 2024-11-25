@@ -1,0 +1,10 @@
+bootstrapPassword: admin
+certmanager:
+  enabled: false
+hostname: cluster.odd.works
+ingress:
+  enabled: true
+  ingressClassName: nginx
+  tls:
+    source: secret
+tls: null

@@ -1,0 +1,20 @@
+gitlabUrl: https://gitlab.odd.works/
+## For RBAC support:
+rbac:
+  create: true
+runnerToken: glrt-X89hxmpJXiUNUNdCumhY
+
+runners:
+  config: |
+    [[runners]]
+      [runners.kubernetes]
+        image = "ubuntu:22.04"
+        privileged = true
+
+concurrent: 5
+
+# Update the security context values to the user ID in the ubuntu image
+securityContext:
+  fsGroup: 999
+  runAsUser: 999
+

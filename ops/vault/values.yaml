@@ -1,0 +1,12 @@
+injector:
+  enabled: false
+server:
+  auditStorage:
+    enabled: true
+  dataStorage:
+    storageClass: csi-cephfs
+  ingress:
+    enabled: true
+    hosts:
+      - host: vault.odd.works
+    ingressClassName: nginx

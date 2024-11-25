@@ -1,0 +1,114 @@
+applicationSet:
+  replicas: 1
+configs:
+  cm:
+    admin.enabled: false
+    exec.enabled: true
+    oidc.config: |
+      name: ODDS SSO
+      issuer: https://sso.odd.works/realms/odds
+      clientID: argo-cd
+      clientSecret: $oidc.keycloak.clientSecret
+      requestedScopes: ["openid", "profile", "email", "groups"]
+    url: https://argo.odd.works/
+  params:
+    server.insecure: true
+  rbac:
+    policy.csv: |
+      p, role:none, *, *, */*, deny
+      p, role:developer, applications, get, */*, allow
+      p, role:developer, applications, sync, */*, allow
+      p, role:developer, projects, get, */*, allow
+      p, role:developer, clusters, get, */*, allow
+      p, role:developer, repositories, get, */*, allow
+      p, role:lessex-maintainer, repositories, create, lessex/*, allow
+      p, role:lessex-maintainer, repositories, get, lessex/*, allow
+      p, role:lessex-maintainer, repositories, update, lessex/*, allow
+      p, role:lessex-maintainer, repositories, delete, lessex/*, allow
+      g, /team-lessex-maintainer, role:lessex-maintainer
+      p, role:tnt-maintainer, projects, get, thainamthip, allow
+      p, role:tnt-maintainer, projects, update, thainamthip, allow
+      p, role:tnt-maintainer, clusters, get, https://cluster.odd.works/k8s/clusters/c-m-h56hhcj6, allow
+      p, role:tnt-maintainer, repositories, create, thainamthip/*, allow
+      p, role:tnt-maintainer, repositories, get, thainamthip/*, allow
+      p, role:tnt-maintainer, repositories, update, thainamthip/*, allow
+      p, role:tnt-maintainer, repositories, delete, thainamthip/*, allow
+      p, role:tnt-maintainer, applications, *, thainamthip/*, allow
+      p, role:tnt-developer, applications, get, thainamthip/*, allow
+      p, role:tnt-developer, applications, sync, thainamthip/*, allow
+      p, role:tnt-guest, applications, get, thainamthip/*, allow
+      g, /team-tnt/maintainer, role:tnt-maintainer
+      g, /team-tnt/developer, role:tnt-developer
+      g, /team-tnt/guest, role:tnt-guest
+      p, role:a-chieve-maintainer, projects, get, a-chieve, allow
+      p, role:a-chieve-maintainer, projects, update, a-chieve, allow
+      p, role:a-chieve-maintainer, clusters, get, https://cluster.odd.works/k8s/clusters/c-m-h56hhcj6, allow
+      p, role:a-chieve-maintainer, repositories, create, a-chieve/*, allow
+      p, role:a-chieve-maintainer, repositories, get, a-chieve/*, allow
+      p, role:a-chieve-maintainer, repositories, update, a-chieve/*, allow
+      p, role:a-chieve-maintainer, repositories, delete, a-chieve/*, allow
+      p, role:a-chieve-maintainer, applications, *, a-chieve/*, allow
+      p, role:a-chieve-developer, applications, get, a-chieve/*, allow
+      p, role:a-chieve-developer, applications, sync, a-chieve/*, allow
+      p, role:a-chieve-guest, applications, get, a-chieve/*, allow
+      g, /team-a-chieve_maintainer, role:a-chieve-maintainer
+      g, /team-a-chieve_developer, role:a-chieve-developer
+      g, /team-a-chieve_guest, role:a-chieve-guest
+      p, role:set-live-maintainer, applications, *, set-live/*, allow
+      p, role:set-live-maintainer, applications, *, livex/*, allow
+      p, proj:set-live-maintainer, exec, create, set-live/*, allow
+      g, /team-set-live-maintainer, role:set-live-maintainer
+      g, /admin, role:admin
+      p, role:oddsregon-admin, projects, get, oddsregon, allow
+      p, role:oddsregon-admin, projects, update, oddsregon, allow
+      p, role:oddsregon-admin, clusters, get, https://cluster.odd.works/k8s/clusters/c-m-h56hhcj6, allow
+      p, role:oddsregon-admin, repositories, create, oddsregon/*, allow
+      p, role:oddsregon-admin, repositories, get, oddsregon/*, allow
+      p, role:oddsregon-admin, repositories, update, oddsregon/*, allow
+      p, role:oddsregon-admin, repositories, delete, oddsregon/*, allow
+      p, role:oddsregon-admin, applications, *, oddsregon/*, allow
+      g, /team-oddsregon, role:oddsregon-admin
+      p, role:devsecops-user, applications, get, devsecops/*, allow
+      p, role:devsecops-user, applications, delete, devsecops/*, allow
+      p, role:devsecops-user, applications, sync, devsecops/*, allow
+      g, /devsecops-class, role:devsecops-user
+    policy.default: role:none
+controller:
+  replicas: 2
+extraObjects:
+  - apiVersion: v1
+    kind: Secret
+    metadata:
+      labels:
+        argocd.argoproj.io/secret-type: repository
+      name: repo-guestbook
+    stringData:
+      name: guestbook
+      url: https://github.com/argoproj/argocd-example-apps.git
+    type: Opaque
+  - apiVersion: v1
+    kind: Secret
+    metadata:
+      labels:
+        app.kubernetes.io/name: argocd-secret
+        app.kubernetes.io/part-of: argocd
+      name: argocd-secret
+    stringData:
+      oidc.auth0.clientSecret: "HG9TlqZoD7AesEE1QuvUi3qXAF4pdios"
+    type: Opaque
+global:
+  domain: argo.odd.works
+notifications:
+  enabled: true
+redis-ha:
+  enabled: true
+repoServer:
+  replicas: 2
+server:
+  ingress:
+    annotations:
+      nginx.ingress.kubernetes.io/backend-protocol: HTTP
+      nginx.ingress.kubernetes.io/force-ssl-redirect: true
+    enabled: true
+    ingressClassName: nginx
+  replicas: 2

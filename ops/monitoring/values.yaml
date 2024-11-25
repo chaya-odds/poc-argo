@@ -1,0 +1,30 @@
+grafana:
+  assertNoLeakedSecrets: false
+  grafana.ini:
+    auth.generic_oauth:
+      enabled: true
+      name: ODDS SSO
+      allow_sign_up: true
+      client_id: grafana
+      client_secret: MYH9Okc2r5n9UdInQ66DhcZSuEhDhRye
+      scopes: openid email profile offline_access roles
+      email_attribute_path: email
+      login_attribute_path: username
+      name_attribute_path: full_name
+      auth_url: https://sso.odd.works/realms/odds/protocol/openid-connect/auth
+      token_url: https://sso.odd.works/realms/odds/protocol/openid-connect/token
+      api_url: https://sso.odd.works/realms/odds/protocol/openid-connect/userinfo
+      signout_redirect_url: https://sso.odd.works/realms/odds/protocol/openid-connect/logout?post_logout_redirect_uri=https%3A%2F%2Fmonitor.odd.works%2Flogin
+      role_attribute_path: contains(groups[*], '/admin') && 'GrafanaAdmin' || contains(roles[*], 'editor') && 'Editor' || 'Viewer'
+      groups_attribute_path: groups
+    server:
+      root_url: https://monitor.odd.works/
+  ingress:
+    enabled: true
+    hosts:
+    - monitor.odd.works
+    ingressClassName: nginx
+prometheus:
+  prometheusSpec:
+    evaluationInterval: 30s
+    scrapeInterval: 30s
