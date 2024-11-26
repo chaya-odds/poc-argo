@@ -1,7 +1,7 @@
 applications:
   argo-apps-ops:
     destination:
-      name: https://kubernetes.default.svc
+      name: in-cluster
       namespace: argo-cd
     finalizers:
     - resources-finalizer.argocd.argoproj.io
@@ -30,7 +30,7 @@ projects:
     - group: "*"
       kind: "*"
     destinations:
-    - name: https://kubernetes.default.svc
+    - name: in-cluster
       namespace: argo-cd
     finalizers:
     - resources-finalizer.argocd.argoproj.io
@@ -59,7 +59,7 @@ projects:
     - group: "*"
       kind: "*"
     destinations:
-    - name: https://kubernetes.default.svc
+    - name: in-cluster
       namespace: "*"
     - name: non-prod
       namespace: "*"
