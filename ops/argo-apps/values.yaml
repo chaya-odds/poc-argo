@@ -63,6 +63,8 @@ projects:
     destinations:
     - name: in-cluster
       namespace: argo-cd
+    - name: in-cluster
+      namespace: ingress-nginx
     finalizers:
     - resources-finalizer.argocd.argoproj.io
     namespaceResourceWhitelist:
