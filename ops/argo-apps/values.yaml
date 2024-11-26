@@ -77,7 +77,7 @@ ingress-nginx:
       kind: "*"
     destinations:
     - name: in-cluster
-      namespace: argo-cd
+      namespace: ingress-nginx
     finalizers:
     - resources-finalizer.argocd.argoproj.io
     namespaceResourceWhitelist:
