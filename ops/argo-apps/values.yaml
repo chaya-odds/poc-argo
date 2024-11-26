@@ -40,34 +40,4 @@ projects:
     roles: []
     sourceRepos:
     - "*"
-    clusterResourceWhitelist:
-    - group: "*"
-      kind: "*"
-    destinations:
-    - name: non-prod
-      namespace: "*"
-    finalizers:
-    - resources-finalizer.argocd.argoproj.io
-    namespaceResourceWhitelist:
-    - group: "*"
-      kind: "*"
-    roles: []
-    sourceRepos:
-    - "*"
-  ops:
-    clusterResourceWhitelist:
-    - group: "*"
-      kind: "*"
-    destinations:
-    - name: in-cluster
-      namespace: "*"
-    - name: non-prod
-      namespace: "*"
-    finalizers:
-    - resources-finalizer.argocd.argoproj.io
-    namespaceResourceWhitelist:
-    - group: "*"
-      kind: "*"
-    roles: []
-    sourceRepos:
-    - "*"
+   
