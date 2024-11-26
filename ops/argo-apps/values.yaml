@@ -23,6 +23,37 @@ applications:
         selfHeal: true
       syncOptions:
       - CreateNamespace=true
+  ingress-nginx:
+    destination:
+      name: in-cluster
+      namespace: ingress-nginx
+    finalizers:
+    - resources-finalizer.argocd.argoproj.io
+    project: ingress-nginx-ops
+    sources:
+    - chart: ingress-nginx
+      helm:
+        releaseName: ingress-nginx
+        values: |
+          controller:
+            admissionWebhooks:
+              enabled: true
+              annotations:
+                argocd.argoproj.io/hook: PostSync
+              patch:
+                enabled: true
+            service:
+              type: NodePort
+              nodePorts:
+                https: 30285
+      repoURL: https://kubernetes.github.io/ingress-nginx
+      targetRevision: 4.10.1
+    syncPolicy:
+      automated:
+        prune: true
+        selfHeal: true
+      syncOptions:
+      - CreateNamespace=true
 
 projects:
   argo-cd:
